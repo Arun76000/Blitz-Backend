@@ -1,5 +1,4 @@
 import express, { Application } from 'express';
-import type { ErrorRequestHandler } from 'express';
 import cors from 'cors';
 import helmet from 'helmet'
 import allExceptionsMiddleware from './middlewares/All-Exception-filter';
@@ -71,7 +70,7 @@ app.use('/api/master/city', cityRoutes)
 app.use('/api/master/category', categoryRoutes);
 app.use('/api/master/location', locationRoutes);
 
-
+//  -> api/v1/
 
 // const exceptionHandler: ErrorRequestHandler = allExceptionsMiddleware();
 // app.use(exceptionHandler());
