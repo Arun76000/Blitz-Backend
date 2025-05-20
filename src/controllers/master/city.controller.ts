@@ -5,7 +5,7 @@ export class CityController {
   static async create(req: Request, res: Response) {
     const { name, stateId } = req.body;
     if (!name || !stateId) {
-      res.status(400).json({ error: 'Name and stateId are required' });
+      // res.status(400).json({ error: 'Name and stateId are required' });
       // return
     }
     const city = await CityService.createCity(name, stateId);

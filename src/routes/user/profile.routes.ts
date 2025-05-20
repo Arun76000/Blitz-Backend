@@ -15,4 +15,6 @@ router.put('/agency', validateRequest(agencyZod, { partial: true }), asyncHandle
 router.put('/agent', validateRequest(agentZod, { partial: true }), asyncHandler(updateAgentProfile));
 router.get('/:id', asyncHandler(getProfile));
 
+
+
 export default router;
