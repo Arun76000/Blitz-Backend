@@ -6,6 +6,8 @@
 // }
 
 
+import { Request } from "express";
+import { paginationData } from "../../core/helper/helper.service";
 import { IUser, UserModel } from "../../model/User.model";
 
 export class ProfileService {
@@ -81,5 +83,11 @@ export class ProfileService {
 
         await user.save();
         return user;
+    }
+
+    async getAllUsers(req: Request) {
+        const aggregatePipeline: any = [];
+        const { data, page_data } = await paginationData(req, UserModel, aggregatePipeline, [], []);
+        return { data, page_data };
     }
 }

@@ -4,6 +4,10 @@ import jwt from 'jsonwebtoken';
 import { sendEmail } from '../../utils/email'; // Utility for sending emails (assumed)
 import { DecodedToken, generateToken, jwtData } from '../../utils/jwt';
 import { GET_ENV_VALUES } from '../../config';
+import { BadRequestException } from '../../core/exception/http-exception';
+import { ApiException } from '../../utils/ApiError';
+import { sendResponse } from '../../core/helper/helper.service';
+import { Response } from 'express';
 
 export class AuthService {
     // Register a new user (Agency, Agent, or Admin)
@@ -62,17 +66,20 @@ export class AuthService {
     }
 
     // Login user
-    async login(email: string, password: string): Promise<{ user: IUser; token: string }> {
+    async login(res:Response,email: string, password: string): Promise<{ user: IUser; token: string } | void> {
         const user = await UserModel.findOne({ email });
-        console.log("auth-login:", user)
         if (!user) {
-            throw new Error('Invalid email or password');
+            // throw new BadRequestException('Invalid email or password');
+            // throw ApiException.badRequest('Invalid email or password')
+            sendResponse(res, 400, 'Invalid email or password')
+            return ;
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         // const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            throw new Error('Invalid email or password');
+            // throw new BadRequestException('Invalid email or password');
+            throw ApiException.badRequest('Invalid email or password');
         }
 
         const payload: jwtData = { id: user?._id?.toString(), role: user.role, type: 'loggedIn' }

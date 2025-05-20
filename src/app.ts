@@ -50,9 +50,6 @@ app.use(asyncHandler(globalMiddleware));
 app.get('/api/home', (req, res) => {
     res.json({ success: true, data: req.body });
 })
-app.get('/', (req, res) => {
-    res.send('<h1>Welcome To The Blitz</h1>');
-})
 
 //.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.==__ROUTES__==.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'.'//
 
@@ -69,6 +66,11 @@ app.use('/api/master/state', stateRoutes)
 app.use('/api/master/city', cityRoutes)
 app.use('/api/master/category', categoryRoutes);
 app.use('/api/master/location', locationRoutes);
+
+app.get('/', (req, res) => {
+    res.send('<h1>Welcome To The Blitz</h1>');
+})
+
 
 //  -> api/v1/
 
