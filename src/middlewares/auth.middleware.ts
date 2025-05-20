@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { GET_ENV_VALUES, getEnv } from '../config/env';
+import { GET_ENV_VALUES } from '../config/env';
 import { IUser, UserModel } from '../model/User.model';
 import { asyncHandler } from '../utils/asyncHandler'; // Adjust path
 

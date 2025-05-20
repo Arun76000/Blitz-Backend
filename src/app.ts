@@ -1,7 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet'
-import allExceptionsMiddleware from './middlewares/All-Exception-filter';
+import {allExceptionsMiddleware} from './middlewares/All-Exception-filter';
 import { interceptorMiddleware } from './middlewares/interceptor.middleware';
 import morgan from 'morgan';
 import { GlobalMiddleware } from './middlewares/global.middleware';

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { GET_ENV_VALUES, getEnv } from '../config';
+import { GET_ENV_VALUES } from '../config';
 
 export interface jwtData {
     id: string;

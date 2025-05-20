@@ -1,6 +1,7 @@
 // constants.js
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import { GET_ENV_VALUES } from '../../config';
 dotenv.config();
 
 export const constants = Object.freeze({
@@ -61,10 +62,10 @@ export const constants = Object.freeze({
 // JWT utilities to replace NestJS JWT Module
 export const jwtUtils = {
   sign: (payload: string, options = {}) => {
-    return jwt.sign(payload, process.env.JWT_SECRET!, options);
+    return jwt.sign(payload, GET_ENV_VALUES('JWT_SECRET'), options);
   },
   verify: (token: string) => {
-    return jwt.verify(token, process.env.JWT_SECRET!);
+    return jwt.verify(token, GET_ENV_VALUES('JWT_SECRET'));
   },
   decode: (token: string) => {
     return jwt.decode(token);

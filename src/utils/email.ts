@@ -1,6 +1,7 @@
 // src/utils/mailer.ts
 
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
+import { GET_ENV_VALUES } from "../config";
 
 export interface EmailOptions {
   to: string;
@@ -10,18 +11,20 @@ export interface EmailOptions {
 }
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT),
-  secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+  host: GET_ENV_VALUES("SMTP_HOST"),
+  port: Number(GET_ENV_VALUES("SMTP_PORT")),
+  secure: GET_ENV_VALUES("SMTP_SECURE") === "true", // true for 465, false for other ports
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: GET_ENV_VALUES("SMTP_USER"),
+    pass: GET_ENV_VALUES("SMTP_PASS"),
   },
 });
 
 export async function sendEmail(options: EmailOptions): Promise<void> {
   const mailOptions = {
-    from: options.from || `"My App" <${process.env.SMTP_FROM || process.env.SMTP_USER}>`,
+    from:
+      options.from ||
+      `"My App" <${GET_ENV_VALUES("SMTP_FROM") || GET_ENV_VALUES("SMTP_USER")}>`,
     to: options.to,
     subject: options.subject,
     html: options.html,
@@ -31,7 +34,7 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
     const info = await transporter.sendMail(mailOptions);
     console.log(`✉️ Email sent: ${info.messageId}`);
   } catch (error) {
-    console.error('❌ Failed to send email:', error);
+    console.error("❌ Failed to send email:", error);
     throw error;
   }
 }

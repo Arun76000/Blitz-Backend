@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { GET_ENV_VALUES } from '../config';
 
 export class LoggerMiddleware {
     middleware = (req: Request, res: Response, next: NextFunction) => {
@@ -28,7 +29,7 @@ export class LoggerMiddleware {
         }
 
         // Logging middleware here using morgan middleware
-        if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
+        if (GET_ENV_VALUES('NODE_ENV') && GET_ENV_VALUES('NODE_ENV') === 'production') {
             morgan('combined', { stream: logStream })(req, res, (err: any) => {
                 if (err) {
                     console.error('Error in Morgan logging:', err);
@@ -37,7 +38,7 @@ export class LoggerMiddleware {
         }
 
         // Morgan will log the details in development mode
-        if (process.env.NODE_ENV && process.env.NODE_ENV === 'development') {
+        if (GET_ENV_VALUES('NODE_ENV') && GET_ENV_VALUES('NODE_ENV') === 'development') {
             morgan('common')(req, res, (err: any) => {
                 if (err) {
                     console.error('Error in Morgan logging (to console):', err);

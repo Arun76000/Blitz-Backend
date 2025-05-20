@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { sendEmail } from '../../utils/email'; // Utility for sending emails (assumed)
 import { DecodedToken, generateToken, jwtData } from '../../utils/jwt';
+import { GET_ENV_VALUES } from '../../config';
 
 export class AuthService {
     // Register a new user (Agency, Agent, or Admin)
@@ -53,7 +54,7 @@ export class AuthService {
         // Generate JWT token
         const token = jwt.sign(
             { userId: user._id, role: user.role },
-            process.env.JWT_SECRET || 'your_jwt_secret',
+            GET_ENV_VALUES('JWT_SECRET') || 'your_jwt_secret',
             { expiresIn: '1h' }
         );
 
@@ -74,12 +75,6 @@ export class AuthService {
             throw new Error('Invalid email or password');
         }
 
-        // const token = jwt.sign(
-        //     { userId: user._id, role: user.role },
-        //     process.env.JWT_SECRET || 'your_jwt_secret',
-        //     { expiresIn: '1h' }
-        // );
-
         const payload: jwtData = { id: user?._id?.toString(), role: user.role, type: 'loggedIn' }
         const token: string = await generateToken(payload)
 
@@ -92,13 +87,6 @@ export class AuthService {
         if (!user) {
             throw new Error('User not found');
         }
-
-        // // Generate reset token
-        // const resetToken = jwt.sign(
-        //     { userId: user._id, type:'forget-pass' },
-        //     process.env.JWT_SECRET || 'your_jwt_secret',
-        //     { expiresIn: '15m' }
-        // );
 
         const payload: jwtData = { id: user._id, role: user.role, type: 'forget-pass' }
         //Generate Token
@@ -117,12 +105,6 @@ export class AuthService {
 
     // Reset password
     async resetPassword(token: string, newPassword: string): Promise<void> {
-        // let decoded: jwtData;
-        // try {
-        //     decoded = jwt.verify(token, process.env.JWT_SECRET || 'your_jwt_secret') as jwtData;
-        // } catch (error) {
-        //     throw new Error('Invalid or expired reset token');
-        // }
         const { id, role, type }: jwtData = await DecodedToken(token)
 
         if (type !== 'forget-pass') {

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { GET_ENV_VALUES, getEnv } from './env';
+import { GET_ENV_VALUES } from './env';
 import { MONGOOSE_OPTIONS } from './constants';
 import { logger } from '../utils/logger';
 
