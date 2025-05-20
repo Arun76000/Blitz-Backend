@@ -13,6 +13,6 @@ router.use(auth);
 router.put('/admin', validateRequest(baseUserZod, { partial: true }), asyncHandler(updateAdminProfile));
 router.put('/agency', validateRequest(agencyZod, { partial: true }), asyncHandler(updateAgencyProfile));
 router.put('/agent', validateRequest(agentZod, { partial: true }), asyncHandler(updateAgentProfile));
-router.get('/', asyncHandler(getProfile));
+router.get('/:id', asyncHandler(getProfile));
 
 export default router;

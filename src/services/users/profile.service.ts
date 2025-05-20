@@ -8,7 +8,7 @@
 
 import { Request } from "express";
 import { paginationData } from "../../core/helper/helper.service";
-import { IUser, UserModel } from "../../model/User.model";
+import { IAgencyProfile, IAgentProfile, IUser, UserModel } from "../../model/User.model";
 
 export class ProfileService {
 
@@ -45,7 +45,7 @@ export class ProfileService {
             if (updates.agencyName) user.agencyName = updates.agencyName;
             if (updates.agencyType) user.agencyType = updates.agencyType;
             if (updates.profile) {
-                user.profile = { ...user.profile, ...updates.profile };
+                user.profile = { ...user.profile, ...updates.profile } as IAgencyProfile;
                 // Validate required fields for agency
                 if (!user.profile?.phone || !user.profile?.location) {
                     throw new Error('Phone and location are required for agency profile');
@@ -58,7 +58,7 @@ export class ProfileService {
             if (updates.firstName) user.firstName = updates.firstName;
             if (updates.lastName) user.lastName = updates.lastName;
             if (updates.agentProfile) {
-                user.agentProfile = { ...user.agentProfile, ...updates.agentProfile };
+                user.agentProfile = { ...user.agentProfile, ...updates.agentProfile } as IAgentProfile;
                 // Validate required fields for agent
                 if (
                     !user.agentProfile?.location ||

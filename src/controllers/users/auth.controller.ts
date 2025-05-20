@@ -65,22 +65,26 @@ const authService = new AuthService();
 export class AuthController {
   // Register endpoint
   async register(req: Request, res: Response): Promise<void> {
-    try {
-      const userData = req.body;
-      const { user, token } = await authService.register(userData);
-      sendResponse(res, 201, "User Registered successfully.", user, { token })
-      // res.status(201).json({
-      //   message: 'User registered successfully',
-      //   user: {
-      //     _id: user._id,
-      //     email: user.email,
-      //     role: user.role,
-      //   },
-      //   token,
-      // });
-    } catch (error: any) {
-      res.status(400).json({ message: error.message });
-    }
+    // try {
+    //   // const userData = req.body;
+    //   // const { user, token } = await authService.register(userData);
+    //   // sendResponse(res, 201, "User Registered successfully.", user, { token })
+    //   // res.status(201).json({
+    //   //   message: 'User registered successfully',
+    //   //   user: {
+    //   //     _id: user._id,
+    //   //     email: user.email,
+    //   //     role: user.role,
+    //   //   },
+    //   //   token,
+    //   // });
+    // } catch (error: any) {
+    //   res.status(400).json({ message: error.message });
+    // }
+
+    const userData = req.body;
+    const { user, token } = await authService.register(userData);
+    sendResponse(res, 201, "User Registered successfully.", user, { token })
   }
 
   // Login endpoint

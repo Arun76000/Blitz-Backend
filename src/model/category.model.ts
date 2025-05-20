@@ -6,7 +6,7 @@ export interface ICategory extends Document {
     id: string;
     name: string;
     parentId: string;
-    isSub:boolean;
+    isSub: boolean;
     description?: string;
     createdAt: Date;
     updatedAt: Date;
@@ -16,7 +16,7 @@ const CategorySchema: Schema = new Schema(
     {
         id: { type: String, required: true, unique: true, default: uuidV4 },
         name: { type: String, required: true, unique: true },
-        parentId: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+        parentId: { type: Schema.Types.ObjectId, ref: 'Category', required: false, default: null },
         isSub: { type: Boolean, required: false, default: false },
         description: { type: String },
     },

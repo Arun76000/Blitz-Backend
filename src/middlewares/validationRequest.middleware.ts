@@ -46,6 +46,9 @@ export const validateRequest = (schema: AnyZodObject, options?: { partial?: bool
   const finalSchema = options?.partial ? schema.partial() : schema;
   return (req: Request, res: Response, next: NextFunction) => {
     try {
+      console.log("----------------------------------------")
+      console.log(req.body)
+      console.log("----------------------------------------")
       const parsed = finalSchema.parse(req.body);
       req.body = parsed;
       next();

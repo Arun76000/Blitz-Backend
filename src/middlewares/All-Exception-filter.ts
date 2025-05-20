@@ -167,6 +167,7 @@ const getResponseMessage = (statusCode: number, lang: lang): string => {
 export const allExceptionsMiddleware = () => {
   return (err: any, req: Request, res: Response, next: NextFunction) => {
     console.log("------------------------All-exception-handle------------------------");
+    console.log("--------ERROR-------",err)
 
     let apiError: ApiError = {
       statusCode: 500,

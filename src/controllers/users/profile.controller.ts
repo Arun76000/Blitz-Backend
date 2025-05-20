@@ -47,8 +47,12 @@ export const updateAgentProfile = async (req: Request, res: Response, next: Next
 
 export const getProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const user = req.user as IUser;
-    const userData = await UserModel.findById(user._id);
+    const userId = req.params?.id;
+    if(!userId){
+      throw new Error("UserId Required!")
+    }
+    // const user = req.user as IUser;
+    const userData = await UserModel.findById(userId);
     sendResponse(res, 200, 'fetched successfully', userData)
   } catch (error) {
     next(error);
