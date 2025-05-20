@@ -20,17 +20,19 @@ export class CategoryService {
     }
 
     static async getAllCategories(): Promise<CategoryResponse[]> {
-        const categories = await CategoryModel.find();
+        const categories = await CategoryModel.find().sort({ createdAt: -1 });
         return categories.map(CategoryService.mapToResponse);
     }
 
-    static async updateCategory(id: string, name?: string, description?: string): Promise<CategoryResponse> {
+    static async updateCategory(id: string, name?: string, description?: string, status?: boolean): Promise<CategoryResponse> {
         const category = await CategoryModel.findOne({ id });
         if (!category) {
             throw new Error('Category not found');
         }
+        console.log('Category found:', status);
         if (name) category.name = name;
         if (description !== undefined) category.description = description;
+        if (status !== undefined) category.status = status;
         await category.save();
         return CategoryService.mapToResponse(category);
     }
@@ -52,6 +54,8 @@ export class CategoryService {
             description: category.description,
             createdAt: category.createdAt,
             updatedAt: category.updatedAt,
+            status: category.status,
+            softDelete: category.softDelete,
         };
     }
 }

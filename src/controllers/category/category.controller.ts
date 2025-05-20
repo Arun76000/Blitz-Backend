@@ -16,24 +16,24 @@ export class CategoryController {
   static async get(req: Request, res: Response) {
     const { id } = req.params;
     const category = await CategoryService.getCategory(id);
-    sendResponse(res, 201, "fetched successfully", category);
+    sendResponse(res, 201, "Fetched successfully", category);
   }
 
   static async getAll(req: Request, res: Response) {
     const categories = await CategoryService.getAllCategories();
-    sendResponse(res, 201, "fetched successfully", categories);
+    sendResponse(res, 201, "Fetched successfully", categories);
   }
 
   static async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { name, description } = req.body;
-    const category = await CategoryService.updateCategory(id, name, description);
-    sendResponse(res, 201, "updated successfully", category);
+    const { name, description, status } = req.body;
+    const category = await CategoryService.updateCategory(id, name, description, status);
+    sendResponse(res, 201, "Updated successfully", category);
   }
 
   static async delete(req: Request, res: Response) {
     const { id } = req.params;
     await CategoryService.deleteCategory(id);
-    sendResponse(res, 201, "deeted successfully");
+    sendResponse(res, 201, "Deleted successfully");
   }
 }
