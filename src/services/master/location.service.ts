@@ -57,6 +57,7 @@ export class LocationService {
       id: location.id,
       name: location.name,
       cityId: (location.cityId as any).id || location.cityId.toString(),
+      zipcodes: location.zipcodes,
       createdAt: location.createdAt,
       updatedAt: location.updatedAt,
     };

@@ -6,6 +6,7 @@ export interface ILocation extends Document {
   id: string;
   name: string;
   cityId: mongoose.Types.ObjectId;
+  zipcodes:string[],
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,6 +16,7 @@ const LocationSchema: Schema = new Schema(
     id: { type: String, required: true, unique: true, default: uuidV4 },
     name: { type: String, required: true },
     cityId: { type: Schema.Types.ObjectId, ref: 'City', required: true },
+    zipcodes: { type: [String], default: [], required: false }
   },
   { timestamps: true, versionKey: false },
 );

@@ -60,6 +60,7 @@ export interface LocationResponse {
     id: string;
     name: string;
     cityId: string;
+    zipcodes: string[];
     createdAt: Date;
     updatedAt: Date;
 }
