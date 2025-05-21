@@ -52,6 +52,8 @@ export interface CategoryResponse {
     parentId: string;
     isSub: boolean;
     description?: string;
+    status: boolean;
+    softDelete: boolean;
     createdAt: Date;
     updatedAt: Date;
 }

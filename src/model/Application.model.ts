@@ -16,7 +16,7 @@ export interface IApplication extends Document {
     };
     statusHistory: { status: string; timestamp: Date }[]; // Track status changes
     status: boolean,
-    soft_delete: boolean,
+    softDelete: boolean,
 }
 
 const ApplicationSchema: Schema = new Schema(
@@ -42,7 +42,7 @@ const ApplicationSchema: Schema = new Schema(
             },
         ],
         status: { type: Boolean, default: true },
-        soft_delete: { type: Boolean, default: false }
+        softDelete: { type: Boolean, default: false }
     },
     {
         timestamps: true,

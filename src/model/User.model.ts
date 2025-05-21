@@ -533,7 +533,7 @@ export interface IUser extends Document {
     savedJobs?: Types.ObjectId[];
     //generic--
     status: boolean,
-    soft_delete: boolean,
+    softDelete: boolean,
     // Methods
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
@@ -910,7 +910,7 @@ const UserSchema: Schema<IUser> = new Schema(
         //--------------------OVERALL-------------
         name: { type: String, default: null },
         status: { type: Boolean, default: true },
-        soft_delete: { type: Boolean, default: false }
+        softDelete: { type: Boolean, default: false }
     },
     {
         timestamps: true,

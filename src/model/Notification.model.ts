@@ -10,7 +10,7 @@ export interface INotification extends Document {
     read: boolean;
     // createdAt: Date;/
     status: boolean,
-    soft_delete: boolean,
+    softDelete: boolean,
 }
 
 const NotificationSchema: Schema = new Schema({
@@ -20,7 +20,7 @@ const NotificationSchema: Schema = new Schema({
     type: { type: String, enum: ['JobUpdate', 'Message', 'System'], required: true },
     read: { type: Boolean, default: false },
     status: { type: Boolean, default: true },
-    soft_delete: { type: Boolean, default: false }
+    softDelete: { type: Boolean, default: false }
 },
     {
         timestamps: true,

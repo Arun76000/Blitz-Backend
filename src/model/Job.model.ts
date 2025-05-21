@@ -34,7 +34,7 @@ export interface IJob extends Document {
   appliedAgents: mongoose.Types.ObjectId[];
   hiredAgents: mongoose.Types.ObjectId[];
   status: boolean,
-  soft_delete: boolean,
+  softDelete: boolean,
   createdAt: Date;
   updatedAt: Date;
 }
@@ -77,7 +77,7 @@ const JobSchema: Schema = new Schema(
     appliedAgents: [{ type: Schema.Types.ObjectId, ref: 'Agent' }],
     hiredAgents: [{ type: Schema.Types.ObjectId, ref: 'Agent' }],
     status: { type: Boolean, default: true },
-    soft_delete: { type: Boolean, default: false }
+    softDelete: { type: Boolean, default: false }
   },
   {
     timestamps: true,

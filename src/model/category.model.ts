@@ -7,9 +7,9 @@ export interface ICategory extends Document {
     name: string;
     parentId: string;
     isSub: boolean;
+    status: boolean;
+    softDelete: boolean;
     description?: string;
-    status: boolean,
-    soft_delete: boolean,
     createdAt: Date;
     updatedAt: Date;
 }
@@ -21,8 +21,8 @@ const CategorySchema: Schema = new Schema(
         parentId: { type: Schema.Types.ObjectId, ref: 'Category', required: false, default: null },
         isSub: { type: Boolean, required: false, default: false },
         description: { type: String },
-        status: { type: Boolean, default: true },
-        soft_delete: { type: Boolean, default: false }
+        status: { type: Boolean, required: false, default: true },
+        softDelete: { type: Boolean, required: false, default: false },
     },
     { timestamps: true, versionKey: false },
 );

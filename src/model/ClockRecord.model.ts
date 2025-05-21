@@ -10,7 +10,7 @@ export interface IClockRecord extends Document {
     clockOut?: Date;
     createdAt: Date;
     status: boolean,
-    soft_delete: boolean,
+    softDelete: boolean,
 }
 
 const ClockRecordSchema: Schema = new Schema(
@@ -22,7 +22,7 @@ const ClockRecordSchema: Schema = new Schema(
         clockOut: { type: Date },
         createdAt: { type: Date, default: Date.now },
         status: { type: Boolean, default: true },
-        soft_delete: { type: Boolean, default: false }
+        softDelete: { type: Boolean, default: false }
     },
     {
         timestamps: true,

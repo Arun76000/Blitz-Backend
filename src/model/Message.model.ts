@@ -10,7 +10,7 @@ export interface IMessage extends Document {
   timestamp: Date;
   read: boolean;
   status: boolean,
-  soft_delete: boolean,
+  softDelete: boolean,
 }
 
 const MessageSchema: Schema = new Schema(
@@ -22,7 +22,7 @@ const MessageSchema: Schema = new Schema(
     timestamp: { type: Date, default: Date.now },
     read: { type: Boolean, default: false },
     status: { type: Boolean, default: true },
-    soft_delete: { type: Boolean, default: false }
+    softDelete: { type: Boolean, default: false }
   },
   {
     timestamps: true,

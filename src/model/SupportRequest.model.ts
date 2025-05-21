@@ -11,7 +11,7 @@ export interface ISupportRequest extends Document {
     message: string;
     requestStatus: 'Open' | 'InProgress' | 'Resolved';
     status: boolean,
-    soft_delete: boolean,
+    softDelete: boolean,
     createdAt: Date;
     updatedAt: Date;
 }
@@ -26,7 +26,7 @@ const SupportRequestSchema: Schema = new Schema(
         message: { type: String, required: true },
         requestStatus: { type: String, enum: ['Open', 'InProgress', 'Resolved'], default: 'Open' },
         status: { type: Boolean, default: true },
-        soft_delete: { type: Boolean, default: false }
+        softDelete: { type: Boolean, default: false }
     },
     {
         timestamps: true,

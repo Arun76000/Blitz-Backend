@@ -18,7 +18,7 @@ export interface ISubcontractor extends Document {
     email: string;
   };
   status: boolean,
-  soft_delete: boolean,
+  softDelete: boolean,
 }
 
 const SubcontractorSchema: Schema = new Schema(
@@ -38,7 +38,7 @@ const SubcontractorSchema: Schema = new Schema(
       email: { type: String, required: true },
     },
     status: { type: Boolean, default: true },
-    soft_delete: { type: Boolean, default: false }
+    softDelete: { type: Boolean, default: false }
   },
   {
     timestamps: true,

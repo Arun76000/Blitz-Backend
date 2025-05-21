@@ -311,7 +311,7 @@ export async function paginationData(
   const skip = (page - 1) * limit;
   const aggregatePipeline = [
     {
-      $match: { ...findQuery, soft_delete: false },
+      $match: { ...findQuery, softDelete: false },
     },
     ...additionalQuery,
     {
@@ -365,11 +365,11 @@ export async function createDocument(Model: any, createDto: object) {
   } catch (error: any) {
     if (error.code === 11000) {
       const updatedDocument = await Model.findOneAndUpdate(
-        { ...error.keyValue, soft_delete: true },
+        { ...error.keyValue, softDelete: true },
         {
           $set: {
             ...createDto,
-            soft_delete: false,
+            softDelete: false,
             status: true,
           },
         },

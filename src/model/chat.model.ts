@@ -10,7 +10,7 @@ export interface IChat extends Document {
     participants: mongoose.Types.ObjectId[];
     admin?: mongoose.Types.ObjectId;
     status: boolean,
-    soft_delete: boolean,
+    softDelete: boolean,
     createdAt: Date;
     updatedAt: Date;
 }
@@ -42,7 +42,7 @@ const ChatSchema: Schema = new Schema(
             ref: 'User',
         },
         status: { type: Boolean, default: true },
-        soft_delete: { type: Boolean, default: false }
+        softDelete: { type: Boolean, default: false }
     },
     {
         timestamps: true,
