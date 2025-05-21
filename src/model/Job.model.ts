@@ -30,9 +30,11 @@ export interface IJob extends Document {
   };
   gender: 'Male' | 'Female' | 'Other';
   payNet: number;
-  status: 'Pending' | 'Approved' | 'Active' | 'Completed';
+  jobStatus: 'Pending' | 'Approved' | 'Active' | 'Completed';
   appliedAgents: mongoose.Types.ObjectId[];
   hiredAgents: mongoose.Types.ObjectId[];
+  status: boolean,
+  soft_delete: boolean,
   createdAt: Date;
   updatedAt: Date;
 }
@@ -71,9 +73,11 @@ const JobSchema: Schema = new Schema(
     },
     gender: { type: String, enum: ['Male', 'Female', 'Other'], required: true },
     payNet: { type: Number, required: true, min: 0 },
-    status: { type: String, enum: ['Pending', 'Approved', 'Active', 'Completed'], default: 'Pending' },
+    jobStatus: { type: String, enum: ['Pending', 'Approved', 'Active', 'Completed'], default: 'Pending' },
     appliedAgents: [{ type: Schema.Types.ObjectId, ref: 'Agent' }],
     hiredAgents: [{ type: Schema.Types.ObjectId, ref: 'Agent' }],
+    status: { type: Boolean, default: true },
+    soft_delete: { type: Boolean, default: false }
   },
   {
     timestamps: true,

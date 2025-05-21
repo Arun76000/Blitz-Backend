@@ -9,6 +9,8 @@ export interface IMessage extends Document {
   content: string;
   timestamp: Date;
   read: boolean;
+  status: boolean,
+  soft_delete: boolean,
 }
 
 const MessageSchema: Schema = new Schema(
@@ -19,6 +21,8 @@ const MessageSchema: Schema = new Schema(
     content: { type: String, required: true },
     timestamp: { type: Date, default: Date.now },
     read: { type: Boolean, default: false },
+    status: { type: Boolean, default: true },
+    soft_delete: { type: Boolean, default: false }
   },
   {
     timestamps: true,

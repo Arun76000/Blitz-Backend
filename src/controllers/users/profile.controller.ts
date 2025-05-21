@@ -54,3 +54,34 @@ export const getProfile = async (req: Request, res: Response, next: NextFunction
   const userData = await UserModel.findById(userId);
   sendResponse(res, 200, 'fetched successfully', userData)
 };
+
+export const getAllAgents = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  const { data, page_data } = await profileService.getAllAgents(req)
+  sendResponse(res, 200, 'fetched successfully', data, { page_data })
+}
+
+
+export const getAllAgency = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+  const { data, page_data } = await profileService.getAllAgency(req)
+  sendResponse(res, 200, 'fetched successfully', data, { page_data })
+}
+
+export const getAgentById = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params?.id;
+  if (!userId) {
+    throw new Error("UserId Required!")
+  }
+  // const user = req.user as IUser;
+  const userData = await profileService.getProfile(userId, "agent");
+  sendResponse(res, 200, 'fetched successfully', userData)
+};
+
+export const getAgencyById = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = req.params?.id;
+  if (!userId) {
+    throw new Error("UserId Required!")
+  }
+  // const user = req.user as IUser;
+  const userData = await profileService.getProfile(userId, "agency");
+  sendResponse(res, 200, 'fetched successfully', userData)
+};

@@ -20,8 +20,8 @@ export class CategoryController {
   }
 
   static async getAll(req: Request, res: Response) {
-    const categories = await CategoryService.getAllCategories();
-    sendResponse(res, 201, "fetched successfully", categories);
+    const { data, page_data } = await CategoryService.getAllCategory(req);
+    sendResponse(res, 201, "fetched successfully", data, { page_data });
   }
 
   static async update(req: Request, res: Response) {

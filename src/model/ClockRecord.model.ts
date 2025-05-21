@@ -9,6 +9,8 @@ export interface IClockRecord extends Document {
     clockIn: Date;
     clockOut?: Date;
     createdAt: Date;
+    status: boolean,
+    soft_delete: boolean,
 }
 
 const ClockRecordSchema: Schema = new Schema(
@@ -19,6 +21,8 @@ const ClockRecordSchema: Schema = new Schema(
         clockIn: { type: Date, required: true },
         clockOut: { type: Date },
         createdAt: { type: Date, default: Date.now },
+        status: { type: Boolean, default: true },
+        soft_delete: { type: Boolean, default: false }
     },
     {
         timestamps: true,

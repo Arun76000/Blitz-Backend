@@ -2,13 +2,15 @@ import { v4 as uuidV4 } from 'uuid';
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IChat extends Document {
-    _id:string,
-    id:string,
+    _id: string,
+    id: string,
     name: string;
     isGroupChat: boolean;
     lastMessage?: mongoose.Types.ObjectId;
     participants: mongoose.Types.ObjectId[];
     admin?: mongoose.Types.ObjectId;
+    status: boolean,
+    soft_delete: boolean,
     createdAt: Date;
     updatedAt: Date;
 }
@@ -39,8 +41,10 @@ const ChatSchema: Schema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'User',
         },
+        status: { type: Boolean, default: true },
+        soft_delete: { type: Boolean, default: false }
     },
-{
+    {
         timestamps: true,
         versionKey: false
     }

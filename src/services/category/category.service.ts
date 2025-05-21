@@ -1,3 +1,5 @@
+import { Request } from 'express';
+import { paginationData } from '../../core/helper/helper.service';
 import { CategoryModel, ICategory } from '../../model/category.model';
 import { CategoryResponse } from '../../types/common.types';
 
@@ -22,6 +24,11 @@ export class CategoryService {
     static async getAllCategories(): Promise<CategoryResponse[]> {
         const categories = await CategoryModel.find();
         return categories.map(CategoryService.mapToResponse);
+    }
+
+    static async getAllCategory(req: Request): Promise<any> {
+        const { data, page_data } = await paginationData(req, CategoryModel, [], [], [])
+        return { data, page_data }
     }
 
     static async updateCategory(id: string, name?: string, description?: string): Promise<CategoryResponse> {

@@ -7,7 +7,7 @@ export interface IApplication extends Document {
     agentId: mongoose.Types.ObjectId; // Reference to User (agent)
     agencyId: mongoose.Types.ObjectId; // Reference to User (agency)
     jobId: mongoose.Types.ObjectId; // Reference to Job
-    status: 'Applied' | 'Reviewed' | 'Interview' | 'Hired' | 'Rejected' | 'Cancelled'; // Application status
+    applicationStatus: 'Applied' | 'Reviewed' | 'Interview' | 'Hired' | 'Rejected' | 'Cancelled'; // Application status
     appliedAt: Date; // When the agent applied
     updatedAt: Date; // Last update to the application
     applicationDetails?: {
@@ -15,6 +15,8 @@ export interface IApplication extends Document {
         additionalNotes?: string; // Optional notes from agent
     };
     statusHistory: { status: string; timestamp: Date }[]; // Track status changes
+    status: boolean,
+    soft_delete: boolean,
 }
 
 const ApplicationSchema: Schema = new Schema(
@@ -23,7 +25,7 @@ const ApplicationSchema: Schema = new Schema(
         agentId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         agencyId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         jobId: { type: Schema.Types.ObjectId, ref: 'Job', required: true },
-        status: {
+        applicationStatus: {
             type: String,
             enum: ['Applied', 'Reviewed', 'Interview', 'Hired', 'Rejected', 'Cancelled'],
             default: 'Applied',
@@ -39,6 +41,8 @@ const ApplicationSchema: Schema = new Schema(
                 timestamp: { type: Date, default: Date.now },
             },
         ],
+        status: { type: Boolean, default: true },
+        soft_delete: { type: Boolean, default: false }
     },
     {
         timestamps: true,
@@ -49,7 +53,7 @@ const ApplicationSchema: Schema = new Schema(
 // Ensure the statusHistory is updated whenever the status changes
 ApplicationSchema.pre('save', function (this: IApplication, next) {
     if (this.isModified('status')) {
-        this.statusHistory.push({ status: this.status, timestamp: new Date() });
+        this.statusHistory.push({ status: this.applicationStatus, timestamp: new Date() });
     }
     next();
 });

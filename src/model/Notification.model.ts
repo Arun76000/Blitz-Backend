@@ -8,7 +8,9 @@ export interface INotification extends Document {
     content: string;
     type: 'JobUpdate' | 'Message' | 'System';
     read: boolean;
-    createdAt: Date;
+    // createdAt: Date;/
+    status: boolean,
+    soft_delete: boolean,
 }
 
 const NotificationSchema: Schema = new Schema({
@@ -17,7 +19,8 @@ const NotificationSchema: Schema = new Schema({
     content: { type: String, required: true },
     type: { type: String, enum: ['JobUpdate', 'Message', 'System'], required: true },
     read: { type: Boolean, default: false },
-    createdAt: { type: Date, default: Date.now },
+    status: { type: Boolean, default: true },
+    soft_delete: { type: Boolean, default: false }
 },
     {
         timestamps: true,

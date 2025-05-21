@@ -3,7 +3,7 @@
 import { z } from 'zod';
 
 export const baseUserZod = z.object({
-    name:z.string().min(3),
+    name:z.string().min(3).optional(),
     email: z.string().email(),
     password: z.string().min(8),
     role: z.enum(['agency', 'agent', 'admin']),

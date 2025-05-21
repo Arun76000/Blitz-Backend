@@ -3,13 +3,15 @@ import { v4 as uuidV4 } from 'uuid';
 
 export interface ISupportRequest extends Document {
     _id: string;
-    id:string,
+    id: string,
     userId: mongoose.Types.ObjectId;
     firstName: string;
     lastName: string;
     email: string;
     message: string;
-    status: 'Open' | 'InProgress' | 'Resolved';
+    requestStatus: 'Open' | 'InProgress' | 'Resolved';
+    status: boolean,
+    soft_delete: boolean,
     createdAt: Date;
     updatedAt: Date;
 }
@@ -22,7 +24,9 @@ const SupportRequestSchema: Schema = new Schema(
         lastName: { type: String, required: true },
         email: { type: String, required: true },
         message: { type: String, required: true },
-        status: { type: String, enum: ['Open', 'InProgress', 'Resolved'], default: 'Open' },
+        requestStatus: { type: String, enum: ['Open', 'InProgress', 'Resolved'], default: 'Open' },
+        status: { type: Boolean, default: true },
+        soft_delete: { type: Boolean, default: false }
     },
     {
         timestamps: true,

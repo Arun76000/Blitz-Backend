@@ -1,5 +1,5 @@
 import express from 'express';
-import { updateProfile, updateAdminProfile, updateAgencyProfile, updateAgentProfile, getProfile } from '../../controllers/users/profile.controller';
+import { updateProfile, updateAdminProfile, updateAgencyProfile, updateAgentProfile, getProfile, getAllAgents, getAgentById, getAllAgency, getAgencyById } from '../../controllers/users/profile.controller';
 import { auth } from '../../middlewares/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { baseUserZod } from '../../core/ZOD/baseuser.validator';
@@ -13,8 +13,17 @@ router.use(auth);
 router.put('/admin', validateRequest(baseUserZod, { partial: true }), asyncHandler(updateAdminProfile));
 router.put('/agency', validateRequest(agencyZod, { partial: true }), asyncHandler(updateAgencyProfile));
 router.put('/agent', validateRequest(agentZod, { partial: true }), asyncHandler(updateAgentProfile));
-router.get('/:id', asyncHandler(getProfile));
 
+//Agents-specific
+router.get('/agents', asyncHandler(getAllAgents));
+router.get('/agents/:id', asyncHandler(getAgentById));
+
+//Agency-specific
+router.get('/agency', asyncHandler(getAllAgency));
+router.get('/agency/:id', asyncHandler(getAgencyById));
+
+//user Profile
+router.get('/:id', asyncHandler(getProfile));
 
 
 export default router;

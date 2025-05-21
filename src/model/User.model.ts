@@ -502,6 +502,7 @@ export interface IAgentProfile {
 export interface IUser extends Document {
     _id: string;
     id: string;
+    name: string;
     email: string;
     password: string;
     role: 'agency' | 'agent' | 'admin';
@@ -530,6 +531,9 @@ export interface IUser extends Document {
     hiredJobs?: Types.ObjectId[];
     completedJobs?: Types.ObjectId[];
     savedJobs?: Types.ObjectId[];
+    //generic--
+    status: boolean,
+    soft_delete: boolean,
     // Methods
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
@@ -819,7 +823,7 @@ const UserSchema: Schema<IUser> = new Schema(
         firstName: {
             type: String,
             required: function (this: IUser) {
-                return this.role === 'agency';
+                return this.role === 'agent';
             },
             // select: false,
             select: function (this: IUser) {
@@ -829,7 +833,7 @@ const UserSchema: Schema<IUser> = new Schema(
         lastName: {
             type: String,
             required: function (this: IUser) {
-                return this.role === 'agency';
+                return this.role === 'agent';
             },
             // select: false,
             select: function (this: IUser) {
@@ -839,7 +843,7 @@ const UserSchema: Schema<IUser> = new Schema(
         agentProfile: {
             type: AgentProfileSchema,
             required: function (this: IUser) {
-                return this.role === 'agency';
+                return this.role === 'agent';
             },
             // select: false,
             select: function (this: IUser) {
@@ -902,6 +906,11 @@ const UserSchema: Schema<IUser> = new Schema(
                 },
             },
         ],
+
+        //--------------------OVERALL-------------
+        name: { type: String, default: null },
+        status: { type: Boolean, default: true },
+        soft_delete: { type: Boolean, default: false }
     },
     {
         timestamps: true,
@@ -928,6 +937,18 @@ UserSchema.pre<IUser>('save', async function (next) {
     }
 });
 
+UserSchema.pre<IUser>('save', async function (next) {
+    try {
+        if (this.role === "agency") {
+            this.name = this.agencyName ?? ''
+        } else if (this.role === "agent") {
+            this.name = `${this.firstName} ${this.lastName}`;
+        }
+        next();
+    } catch (err) {
+        next(err as Error);
+    }
+});
 // 🔐 Instance method to compare password
 UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
     return await bcrypt.compare(candidatePassword, this.password);

@@ -90,4 +90,28 @@ export class ProfileService {
         const { data, page_data } = await paginationData(req, UserModel, aggregatePipeline, [], []);
         return { data, page_data };
     }
+
+    async getAllAgents(req: Request) {
+        const aggregatePipeline: any = [
+            {
+                $match: {
+                    role: "agent"
+                }
+            }
+        ];
+        const { data, page_data } = await paginationData(req, UserModel, aggregatePipeline, [], []);
+        return { data, page_data };
+    }
+
+    async getAllAgency(req: Request) {
+        const aggregatePipeline: any = [
+            {
+                $match: {
+                    role: "agency"
+                }
+            }
+        ];
+        const { data, page_data } = await paginationData(req, UserModel, aggregatePipeline, [], []);
+        return { data, page_data };
+    }
 }
