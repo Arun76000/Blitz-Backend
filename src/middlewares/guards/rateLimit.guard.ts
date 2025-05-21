@@ -29,10 +29,11 @@ export function createRateLimitMiddleware(
             res.setHeader('X-RateLimit-Remaining', customReq.rateLimit.remaining.toString());
             res.setHeader('X-RateLimit-Reset', resetTime.toISOString());
 
-            res.status(429).json({
-                flag: false,
-                message: responseMessage,
-            });
+            // res.status(429).json({
+            //     flag: false,
+            //     message: responseMessage,
+            // });
+            res.status(429).send(responseMessage)
         }
     });
 

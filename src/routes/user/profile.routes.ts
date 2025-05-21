@@ -6,21 +6,25 @@ import { baseUserZod } from '../../core/ZOD/baseuser.validator';
 import { validateRequest } from '../../middlewares/validationRequest.middleware';
 import { agencyZod } from '../../core/ZOD/agency.validator';
 import { agentZod } from '../../core/ZOD/agent.validator';
+import { authMiddleware, roleGuard } from '../../middlewares/authorizations.middleware';
 
 const router = express.Router();
 
-router.use(auth);
+
+router.use('', authMiddleware)
 router.put('/admin', validateRequest(baseUserZod, { partial: true }), asyncHandler(updateAdminProfile));
-router.put('/agency', validateRequest(agencyZod, { partial: true }), asyncHandler(updateAgencyProfile));
-router.put('/agent', validateRequest(agentZod, { partial: true }), asyncHandler(updateAgentProfile));
 
 //Agents-specific
-router.get('/agents', asyncHandler(getAllAgents));
-router.get('/agents/:id', asyncHandler(getAgentById));
+router.route('/agents').get(roleGuard(['admin']), asyncHandler(getAllAgents))
+router.route('/agents/:id')
+    .get(roleGuard(['agent']), asyncHandler(getAgentById))
+    .put(validateRequest(agentZod, { partial: true }), asyncHandler(updateAgentProfile))
 
 //Agency-specific
-router.get('/agency', asyncHandler(getAllAgency));
-router.get('/agency/:id', asyncHandler(getAgencyById));
+router.route('/agency').get(asyncHandler(getAllAgency))
+router.route('/agency/:id')
+    .get(asyncHandler(getAgencyById))
+    .put(validateRequest(agencyZod, { partial: true }), asyncHandler(updateAgencyProfile))
 
 //user Profile
 router.get('/:id', asyncHandler(getProfile));

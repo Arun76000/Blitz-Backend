@@ -97,6 +97,23 @@ export class ProfileService {
                 $match: {
                     role: "agent"
                 }
+            },
+            //lookup for Number of Applied Job and Agencies Name where has Applied
+
+            // {
+            //     $lookup: {
+            //     }
+            // },
+            {
+                $project: {
+                    firstName: 1,
+                    lastName: 1,
+                    name: 1,
+                    email: 1,
+                    id: 1,
+                    status: 1,
+                    createdAt: 1,
+                }
             }
         ];
         const { data, page_data } = await paginationData(req, UserModel, aggregatePipeline, [], []);
@@ -108,6 +125,19 @@ export class ProfileService {
             {
                 $match: {
                     role: "agency"
+                }
+            },
+            //lookup for Number of Job Post and Agents names to particular job applied
+
+            {
+                $project: {
+                    firstName: 1,
+                    lastName: 1,
+                    name: 1,
+                    email: 1,
+                    id: 1,
+                    status: 1,
+                    createdAt: 1,
                 }
             }
         ];
