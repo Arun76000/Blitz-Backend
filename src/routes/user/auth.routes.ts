@@ -27,15 +27,17 @@ import { asyncHandler } from '../../utils/asyncHandler';
 import { agentZod } from '../../core/ZOD/agent.validator';
 import { agencyZod } from '../../core/ZOD/agency.validator';
 import { catchAsync } from '../../core/helper/helper.service';
+import { authMiddleware } from '../../middlewares/authorizations.middleware';
 const router = Router();
 
 const authController = new AuthController();
 // const profileController = new ProfileController();
 
 // Auth Routes
-router.post('/register', validateRequest(baseUserZod), asyncHandler(authController.register));
-router.post('/register-agent', validateRequest(agentZod), asyncHandler(authController.register));
-router.post('/register-agency', validateRequest(agencyZod), asyncHandler(authController.register));
+
+router.post('/register', authMiddleware, validateRequest(baseUserZod), asyncHandler(authController.register));
+router.post('/register-agent', authMiddleware, validateRequest(agentZod), asyncHandler(authController.register));
+router.post('/register-agency', authMiddleware, validateRequest(agencyZod), asyncHandler(authController.register));
 router.post('/login', validateRequest(loginZod), asyncHandler(authController.login));
 router.post('/request-password-reset', validateRequest(forgotPasswordZod), asyncHandler(authController.requestPasswordReset));
 router.post('/reset-password', validateRequest(resetPasswordZod), asyncHandler(authController.resetPassword));

@@ -24,7 +24,7 @@ import locationRoutes from './master/location.routes';
  * various endpoints.
  * @description The router function sets up the routes for various API endpoints in the application.
  */
-const router = (app: Application) => {
+const router = () => {
     const router:Router = Router()
     router.use('/user/auth', userAuthRoutes);
     router.use('/user/profile', userProfileRoutes);
@@ -44,10 +44,7 @@ const router = (app: Application) => {
         res.send('<h1>Welcome To The Blitz</h1>');
     })
 
-
-    app.use('/api',router)
-    
-    return app;
+    return router
 
 }
 

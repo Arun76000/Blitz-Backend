@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { lang } from "../../types/common.types";
+import { IUser, UserModel } from '../..//model/User.model';
 
 export interface ExpressRequest extends Request {
     // rateLimit?: {
@@ -21,4 +22,10 @@ export interface ExpressRequest extends Request {
         resetTime: Date;
     };
     // rateLimit?:any;
+}
+
+declare module 'express-serve-static-core' {
+  interface Request {
+    user?: IUser;
+  }
 }

@@ -1,10 +1,11 @@
 import express from 'express';
 import { postJob, getJobs } from '../../controllers/agency/job.controller';
-import { auth, roleGuard } from '../../middlewares/auth.middleware';
+import { authMiddleware, roleGuard } from '../../middlewares/authorizations.middleware';
 
 const router = express.Router();
 
-router.use(auth, roleGuard(['agency']));
+router.use(router.use(authMiddleware), roleGuard(['agent']));
+
 router.post('/', postJob);
 router.get('/', getJobs);
 

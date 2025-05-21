@@ -3,10 +3,13 @@ import { CategoryController } from '../../controllers/category/category.controll
 import { asyncHandler } from '../../utils/asyncHandler';
 import { validateRequest } from '../../middlewares/validationRequest.middleware';
 import { CategoryZod } from '../../core/ZOD/category.validator';
+import { authMiddleware } from '../../middlewares/authorizations.middleware';
 // import { verifyApiKey } from '../middleware/apiKey';
 // import { verifyToken } from '../middleware/auth';
 
 const router = Router();
+
+router.use('', authMiddleware)
 
 router.post('/', validateRequest(CategoryZod), asyncHandler(CategoryController.create));
 router.get('/:id', asyncHandler(CategoryController.get));

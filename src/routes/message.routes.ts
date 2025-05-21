@@ -1,10 +1,12 @@
 import express from 'express';
 import { sendMessage, getMessages } from '../controllers/message.controller';
-import { auth } from '../middlewares/auth.middleware';
+import { authMiddleware } from '../middlewares/authorizations.middleware';
+// import { auth } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
-router.use(auth);
+router.use(authMiddleware);
+
 router.post('/', sendMessage);
 router.get('/', getMessages);
 

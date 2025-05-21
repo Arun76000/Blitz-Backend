@@ -1,6 +1,5 @@
 import express from 'express';
 import { updateProfile, updateAdminProfile, updateAgencyProfile, updateAgentProfile, getProfile, getAllAgents, getAgentById, getAllAgency, getAgencyById } from '../../controllers/users/profile.controller';
-import { auth } from '../../middlewares/auth.middleware';
 import { asyncHandler } from '../../utils/asyncHandler';
 import { baseUserZod } from '../../core/ZOD/baseuser.validator';
 import { validateRequest } from '../../middlewares/validationRequest.middleware';
@@ -11,7 +10,8 @@ import { authMiddleware, roleGuard } from '../../middlewares/authorizations.midd
 const router = express.Router();
 
 
-router.use('', authMiddleware)
+router.use(authMiddleware)
+
 router.put('/admin', validateRequest(baseUserZod, { partial: true }), asyncHandler(updateAdminProfile));
 
 //Agents-specific
